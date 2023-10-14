@@ -46,11 +46,7 @@ void MainWindow::NumPressed()
 }
 
 void MainWindow::MathButtonPressed(){
-    calc.addTrigger = false;
-    calc.subTrigger = false;
-    calc.mulTrigger = false;
-    calc.divTrigger = false;
-    calc.expTrigger = false;
+    calc.setDefault();
     QString entryValue = ui->Entry->text();
     calcValue = entryValue.toDouble();
     QPushButton *button = (QPushButton *)sender();

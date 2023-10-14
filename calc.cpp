@@ -5,6 +5,15 @@ calc::calc()
 
 }
 
+void calc::setDefault()
+{
+    addTrigger = false;
+    subTrigger = false;
+    mulTrigger = false;
+    divTrigger = false;
+    expTrigger = false;
+}
+
 void calc::setPlus()
 {
     addTrigger = true;

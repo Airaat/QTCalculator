@@ -1,11 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 double calcValue = 0.0;
-bool addTrigger = false;
-bool subTrigger = false;
-bool mulTrigger = false;
-bool divTrigger = false;
-bool expTrigger = false;
 
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
@@ -51,25 +46,25 @@ void MainWindow::NumPressed()
 }
 
 void MainWindow::MathButtonPressed(){
-    addTrigger = false;
-    subTrigger = false;
-    mulTrigger = false;
-    divTrigger = false;
-    expTrigger = false;
+    calc.addTrigger = false;
+    calc.subTrigger = false;
+    calc.mulTrigger = false;
+    calc.divTrigger = false;
+    calc.expTrigger = false;
     QString entryValue = ui->Entry->text();
     calcValue = entryValue.toDouble();
     QPushButton *button = (QPushButton *)sender();
     QString butValue = button->text();
     if (QString::compare(butValue, "÷", Qt::CaseInsensitive) == 0){
-        divTrigger = true;
+        calc.setDivide();
     } else if (QString::compare(butValue, "×", Qt::CaseInsensitive) == 0){
-        mulTrigger = true;
+        calc.setMult();
     } else if (QString::compare(butValue, "+", Qt::CaseInsensitive) == 0){
-        addTrigger = true;
+        calc.setPlus();
     } else if (QString::compare(butValue, "-", Qt::CaseInsensitive) == 0){
-        subTrigger = true;
+        calc.setMinus();
     } else if (QString::compare(butValue, "^", Qt::CaseInsensitive) == 0){
-        expTrigger = true;
+        calc.setExp();
     }
     ui->Entry->setText("");
 
@@ -79,19 +74,19 @@ void MainWindow::EqualButtonPressed(){
     double solution = 0;
     QString entryValue = ui->Entry->text();
     double dblEntryValue = entryValue.toDouble();
-    if(addTrigger){
+    if(calc.addTrigger){
         solution = calcValue + dblEntryValue;
-    } else if (subTrigger){
+    } else if (calc.subTrigger){
         solution = calcValue - dblEntryValue;
-    } else if (divTrigger){
+    } else if (calc.divTrigger){
         if (dblEntryValue != 0){
             solution = calcValue / dblEntryValue;
         } else {
-            ui->Entry->setText("Ошибка");
+            ui->Entry->setText("Error");
         }
-    } else if (mulTrigger){
+    } else if (calc.mulTrigger){
         solution = calcValue * dblEntryValue;
-    } else if (expTrigger){
+    } else if (calc.expTrigger){
         solution = pow(calcValue, dblEntryValue);
     }
     ui->Entry->setText(QString::number(solution));

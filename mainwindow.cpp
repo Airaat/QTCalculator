@@ -66,26 +66,27 @@ void MainWindow::MathButtonPressed(){
 
 }
 
-void MainWindow::EqualButtonPressed(){
+void MainWindow::EqualButtonPressed() {
     double solution = 0;
     QString entryValue = ui->Entry->text();
     double dblEntryValue = entryValue.toDouble();
-    if(calc.addTrigger){
-        solution = calcValue + dblEntryValue;
-    } else if (calc.subTrigger){
-        solution = calcValue - dblEntryValue;
-    } else if (calc.divTrigger){
-        if (dblEntryValue != 0){
+
+    if (calc.divTrigger && dblEntryValue == 0) {
+        ui->Entry->setText("Error");
+    } else {
+        if (calc.addTrigger) {
+            solution = calcValue + dblEntryValue;
+        } else if (calc.subTrigger) {
+            solution = calcValue - dblEntryValue;
+        } else if (calc.divTrigger) {
             solution = calcValue / dblEntryValue;
-        } else {
-            ui->Entry->setText("Error");
+        } else if (calc.mulTrigger) {
+            solution = calcValue * dblEntryValue;
+        } else if (calc.expTrigger) {
+            solution = pow(calcValue, dblEntryValue);
         }
-    } else if (calc.mulTrigger){
-        solution = calcValue * dblEntryValue;
-    } else if (calc.expTrigger){
-        solution = pow(calcValue, dblEntryValue);
+        ui->Entry->setText(QString::number(solution));
     }
-    ui->Entry->setText(QString::number(solution));
 }
 
 void MainWindow::CButtonPressed(){
